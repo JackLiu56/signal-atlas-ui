@@ -1,0 +1,124 @@
+<div class="page-container">
+  <header class="page-header">
+    <h1>Signal Atlas</h1>
+    <p>A catalog of vintage two-way radios and communication hardware.</p>
+  </header>
+
+  <section class="filter-panel">
+    <input
+      type="text"
+      placeholder="Search model, brand, protocol..."
+      [(ngModel)]="q"
+      (keyup.enter)="search()"
+    />
+
+    <select [(ngModel)]="category">
+      <option value="">All Categories</option>
+      <option value="HANDHELD">Handheld</option>
+      <option value="MOBILE">Mobile</option>
+      <option value="BASE_STATION">Base Station</option>
+      <option value="REPEATER">Repeater</option>
+      <option value="SCANNER">Scanner</option>
+      <option value="ACCESSORY">Accessory</option>
+    </select>
+
+    <select [(ngModel)]="frequencyBand">
+      <option value="">All Bands</option>
+      <option value="LOW_BAND">Low Band</option>
+      <option value="VHF">VHF</option>
+      <option value="UHF">UHF</option>
+      <option value="BAND_700_800">700/800 MHz</option>
+      <option value="MULTI_BAND">Multi Band</option>
+      <option value="UNKNOWN">Unknown</option>
+    </select>
+
+    <select [(ngModel)]="sortBy">
+      <option value="modelName">Sort by Model</option>
+      <option value="brandName">Sort by Brand</option>
+      <option value="releaseYear">Sort by Release Year</option>
+      <option value="estimatedMarketLow">Sort by Low Price</option>
+      <option value="estimatedMarketHigh">Sort by High Price</option>
+      <option value="createdAt">Sort by Created Date</option>
+    </select>
+
+    <select [(ngModel)]="direction">
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+
+    <button type="button" (click)="search()">Search</button>
+    <button type="button" class="secondary" (click)="clearFilters()">Clear</button>
+  </section>
+
+  <section *ngIf="loading" class="message">
+    Loading catalog...
+  </section>
+
+  <section *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </section>
+
+  <section *ngIf="!loading && !errorMessage" class="catalog-card">
+    <div class="catalog-summary">
+      Showing {{ radios.length }} of {{ totalElements }} radio models
+    </div>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Category</th>
+        <th>Band</th>
+        <th>Protocol</th>
+        <th>Years</th>
+        <th>Market Range</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let radio of radios">
+        <td>{{ radio.brandName }}</td>
+        <td>
+          <a [routerLink]="['/radios', radio.id]" class="model-link">
+            <strong>{{ radio.modelName }}</strong>
+          </a>
+          <div class="subtext">{{ radio.modelNumber }}</div>
+        </td>
+        <td>{{ radio.category }}</td>
+        <td>{{ radio.frequencyBand }}</td>
+        <td>{{ radio.digitalProtocol }}</td>
+        <td>
+          {{ radio.releaseYear }}
+          <span *ngIf="radio.discontinuedYear">
+              - {{ radio.discontinuedYear }}
+            </span>
+        </td>
+        <td>
+          ${{ radio.estimatedMarketLow }}
+          -
+          ${{ radio.estimatedMarketHigh }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="radios.length === 0" class="message">
+      No radio models found.
+    </div>
+
+    <div class="pagination">
+      <button type="button" (click)="previousPage()" [disabled]="first">
+        Previous
+      </button>
+
+      <span>
+        Page {{ pageNumber + 1 }} of {{ totalPages || 1 }}
+      </span>
+
+      <button type="button" (click)="nextPage()" [disabled]="last">
+        Next
+      </button>
+    </div>
+  </section>
+</div>

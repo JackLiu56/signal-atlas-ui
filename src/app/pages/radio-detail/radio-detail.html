@@ -1,0 +1,110 @@
+<div class="page-container">
+  <a routerLink="/radios" class="back-link">← Back to Catalog</a>
+
+  <section *ngIf="loading" class="message">
+    Loading radio details...
+  </section>
+
+  <section *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </section>
+
+  <section *ngIf="!loading && !errorMessage && radio" class="detail-card">
+    <header class="detail-header">
+      <div>
+        <h1>{{ radio.brandName }} {{ radio.modelName }}</h1>
+        <p>{{ radio.description }}</p>
+      </div>
+
+      <div class="price-box">
+        <span>Estimated Market Range</span>
+        <strong>
+          ${{ radio.estimatedMarketLow }} - ${{ radio.estimatedMarketHigh }}
+        </strong>
+      </div>
+    </header>
+
+    <section class="info-grid">
+      <div class="info-item">
+        <span>Brand</span>
+        <strong>{{ radio.brandName }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Country</span>
+        <strong>{{ radio.brandCountry }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Model Number</span>
+        <strong>{{ radio.modelNumber }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Category</span>
+        <strong>{{ radio.category }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Frequency Band</span>
+        <strong>{{ radio.frequencyBand }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Frequency Range</span>
+        <strong>{{ radio.frequencyRange }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Modulation</span>
+        <strong>{{ radio.modulation }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Digital Protocol</span>
+        <strong>{{ radio.digitalProtocol }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Release Year</span>
+        <strong>{{ radio.releaseYear }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Discontinued Year</span>
+        <strong>{{ radio.discontinuedYear }}</strong>
+      </div>
+    </section>
+
+    <section class="spec-section">
+      <h2>Technical Specifications</h2>
+
+      <table *ngIf="radio.specs.length > 0">
+        <thead>
+        <tr>
+          <th>Category</th>
+          <th>Specification</th>
+          <th>Value</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let spec of radio.specs">
+          <td>{{ spec.category }}</td>
+          <td>{{ spec.specName }}</td>
+          <td>
+            {{ spec.specValue }}
+            <span *ngIf="spec.unit">
+                {{ spec.unit }}
+              </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="radio.specs.length === 0" class="message">
+        No technical specifications available.
+      </div>
+    </section>
+  </section>
+</div>
