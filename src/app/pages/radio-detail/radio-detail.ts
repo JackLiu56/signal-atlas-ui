@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RadioModelDetail } from '../../models/radio-detail';
 import { HttpClient } from '@angular/common/http';
@@ -36,9 +36,11 @@ export class RadioDetail implements OnInit {
   errorMessage = '';
 
   deletingSpecId: number | null = null;
+  deletingRadio = false;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private radioApiService: RadioApiService,
     private changeDetectorRef: ChangeDetectorRef,
   ) {}
@@ -184,5 +186,46 @@ export class RadioDetail implements OnInit {
           this.changeDetectorRef.detectChanges();
         },
       });
+  }
+
+  deleteRadioModel(): void {
+    if (!this.radio) {
+      this.errorMessage = 'Radio model information is missing.';
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${this.radio.brandName} ${this.radio.modelName}? This action cannot be undone.`,
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.errorMessage = '';
+    this.specErrorMessage = '';
+    this.specSuccessMessage = '';
+    this.deletingRadio = true;
+
+    this.radioApiService.deleteRadioModel(this.radio.id).subscribe({
+      next: () => {
+        this.deletingRadio = false;
+        this.changeDetectorRef.detectChanges();
+
+        this.router.navigate(['/radios']);
+      },
+      error: (error) => {
+        console.error('Delete radio API error:', error);
+
+        if (error.error && error.error.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = 'Unable to delete radio model.';
+        }
+
+        this.deletingRadio = false;
+        this.changeDetectorRef.detectChanges();
+      },
+    });
   }
 }

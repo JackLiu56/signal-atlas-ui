@@ -65,4 +65,10 @@ export class RadioApiService {
       request
     );
   }
+
+  deleteRadioModel(id: number): Observable<string> {
+    return this.http.delete(`${this.radioBaseUrl}/${id}`, {
+      responseType: 'text',
+    });
+  }
 }

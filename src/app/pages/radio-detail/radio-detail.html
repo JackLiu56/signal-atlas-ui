@@ -21,6 +21,15 @@
         >
           Edit Radio Model
         </a>
+
+        <button
+          type="button"
+          class="delete-radio-button"
+          [disabled]="deletingRadio"
+          (click)="deleteRadioModel()"
+        >
+          {{ deletingRadio ? 'Deleting...' : 'Delete Radio Model' }}
+        </button>
       </div>
 
       <div class="price-box">
