@@ -3,18 +3,19 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { CatalogQuery, PagedResponse, RadioModelSummary } from '../models/radio-catalog';
 import { Observable } from 'rxjs';
 import { RadioModelDetail } from '../models/radio-detail';
+import { Brand } from '../models/brand';
+import { RadioModelRequest } from '../models/radio-request';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RadioApiService {
-  private readonly baseUrl = 'http://localhost:8080/api/radios';
+  private readonly radioBaseUrl = 'http://localhost:8080/api/radios';
+  private readonly brandBaseUrl = 'http://localhost:8080/api/brands';
 
   constructor(private http: HttpClient) {}
 
-  getCatalog(
-    query: CatalogQuery = {}
-  ): Observable<PagedResponse<RadioModelSummary>> {
+  getCatalog(query: CatalogQuery = {}): Observable<PagedResponse<RadioModelSummary>> {
     let params = new HttpParams();
 
     Object.entries(query).forEach(([key, value]) => {
@@ -23,15 +24,20 @@ export class RadioApiService {
       }
     });
 
-    return this.http.get<PagedResponse<RadioModelSummary>>(
-      `${this.baseUrl}/catalog`,
-      { params }
-    );
+    return this.http.get<PagedResponse<RadioModelSummary>>(`${this.radioBaseUrl}/catalog`, { params });
   }
 
-  getRadioDetails(id: number): Observable<RadioModelDetail>{
-    return this.http.get<RadioModelDetail>(
-      `${this.baseUrl}/${id}/details`
-    );
+  getRadioDetails(id: number): Observable<RadioModelDetail> {
+    return this.http.get<RadioModelDetail>(`${this.radioBaseUrl}/${id}/details`);
+  }
+
+  getBrand(): Observable<Brand[]> {
+    return this.http.get<Brand[]>(this.brandBaseUrl);
+  }
+
+  createRadioModel(
+    request: RadioModelRequest
+  ): Observable<{ id: number }> {
+    return this.http.post<{ id: number }>(this.radioBaseUrl, request);
   }
 }
