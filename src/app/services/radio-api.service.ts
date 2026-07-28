@@ -35,7 +35,7 @@ export class RadioApiService {
     return this.http.get<RadioModelDetail>(`${this.radioBaseUrl}/${id}/details`);
   }
 
-  getBrand(): Observable<Brand[]> {
+  getBrands(): Observable<Brand[]> {
     return this.http.get<Brand[]>(this.brandBaseUrl);
   }
 
@@ -53,6 +53,16 @@ export class RadioApiService {
       {
         responseType: 'text',
       },
+    );
+  }
+
+  updateRadioModel(
+    id: number,
+    request: RadioModelRequest
+  ): Observable<{ id: number }> {
+    return this.http.put<{ id: number }>(
+      `${this.radioBaseUrl}/${id}`,
+      request
     );
   }
 }

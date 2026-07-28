@@ -52,7 +52,7 @@ export class RadioCreate implements OnInit {
     this.loadingBrands = true;
     this.errorMessage = '';
 
-    this.radioApiService.getBrand().subscribe({
+    this.radioApiService.getBrands().subscribe({
       next: (response: Brand[]) => {
         this.brands = response;
 

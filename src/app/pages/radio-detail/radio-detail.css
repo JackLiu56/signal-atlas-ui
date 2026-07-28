@@ -204,6 +204,21 @@ th {
   cursor: not-allowed;
 }
 
+.edit-radio-link {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 9px 14px;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.edit-radio-link:hover {
+  background: #444;
+}
+
 @media (max-width: 760px) {
   .detail-header {
     flex-direction: column;

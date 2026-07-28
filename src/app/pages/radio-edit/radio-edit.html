@@ -1,0 +1,207 @@
+<div class="page-container">
+  <a
+    *ngIf="radioId"
+    [routerLink]="['/radios', radioId]"
+    class="back-link"
+  >
+    ← Back to Details
+  </a>
+
+  <header class="page-header">
+    <h1>Edit Radio Model</h1>
+    <p>Update radio model information in the Signal Atlas catalog.</p>
+  </header>
+
+  <section *ngIf="loading" class="message">
+    Loading radio model...
+  </section>
+
+  <section *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </section>
+
+  <section *ngIf="successMessage" class="success">
+    {{ successMessage }}
+  </section>
+
+  <form
+    *ngIf="!loading"
+    class="form-card"
+    (ngSubmit)="submitForm()"
+  >
+    <div class="form-grid">
+      <label>
+        Brand
+        <select
+          name="brandId"
+          [(ngModel)]="form.brandId"
+          required
+        >
+          <option
+            *ngFor="let brand of brands"
+            [ngValue]="brand.id"
+            [textContent]="brand.name"
+          ></option>
+        </select>
+      </label>
+
+      <label>
+        Model Name
+        <input
+          type="text"
+          name="modelName"
+          [(ngModel)]="form.modelName"
+          required
+          placeholder="XTS 5000"
+        />
+      </label>
+
+      <label>
+        Model Number
+        <input
+          type="text"
+          name="modelNumber"
+          [(ngModel)]="form.modelNumber"
+          placeholder="H18UCH9PW7AN"
+        />
+      </label>
+
+      <label>
+        Category
+        <select
+          name="category"
+          [(ngModel)]="form.category"
+        >
+          <option value="HANDHELD">Handheld</option>
+          <option value="MOBILE">Mobile</option>
+          <option value="BASE_STATION">Base Station</option>
+          <option value="REPEATER">Repeater</option>
+          <option value="SCANNER">Scanner</option>
+          <option value="ACCESSORY">Accessory</option>
+        </select>
+      </label>
+
+      <label>
+        Frequency Band
+        <select
+          name="frequencyBand"
+          [(ngModel)]="form.frequencyBand"
+        >
+          <option value="LOW_BAND">Low Band</option>
+          <option value="VHF">VHF</option>
+          <option value="UHF">UHF</option>
+          <option value="BAND_700_800">700/800 MHz</option>
+          <option value="MULTI_BAND">Multi Band</option>
+          <option value="UNKNOWN">Unknown</option>
+        </select>
+      </label>
+
+      <label>
+        Frequency Range
+        <input
+          type="text"
+          name="frequencyRange"
+          [(ngModel)]="form.frequencyRange"
+          placeholder="380-470 MHz"
+        />
+      </label>
+
+      <label>
+        Modulation
+        <input
+          type="text"
+          name="modulation"
+          [(ngModel)]="form.modulation"
+          placeholder="FM / P25"
+        />
+      </label>
+
+      <label>
+        Digital Protocol
+        <input
+          type="text"
+          name="digitalProtocol"
+          [(ngModel)]="form.digitalProtocol"
+          placeholder="APCO P25"
+        />
+      </label>
+
+      <label>
+        Release Year
+        <input
+          type="number"
+          name="releaseYear"
+          [(ngModel)]="form.releaseYear"
+          placeholder="2002"
+        />
+      </label>
+
+      <label>
+        Discontinued Year
+        <input
+          type="number"
+          name="discontinuedYear"
+          [(ngModel)]="form.discontinuedYear"
+          placeholder="2014"
+        />
+      </label>
+
+      <label>
+        Estimated Market Low
+        <input
+          type="number"
+          name="estimatedMarketLow"
+          [(ngModel)]="form.estimatedMarketLow"
+          placeholder="150"
+        />
+      </label>
+
+      <label>
+        Estimated Market High
+        <input
+          type="number"
+          name="estimatedMarketHigh"
+          [(ngModel)]="form.estimatedMarketHigh"
+          placeholder="450"
+        />
+      </label>
+    </div>
+
+    <label class="full-width">
+      Description
+      <textarea
+        name="description"
+        [(ngModel)]="form.description"
+        rows="5"
+        placeholder="A professional portable two-way radio..."
+      ></textarea>
+    </label>
+
+    <label class="full-width">
+      Image URL
+      <input
+        type="text"
+        name="imageUrl"
+        [(ngModel)]="form.imageUrl"
+        placeholder="https://example.com/radio-image.jpg"
+      />
+    </label>
+
+    <div class="actions">
+      <button
+        type="submit"
+        [disabled]="saving"
+      >
+        {{ saving ? 'Saving...' : 'Save Changes' }}
+      </button>
+
+      <a
+        *ngIf="radioId"
+        [routerLink]="['/radios', radioId]"
+        class="cancel-link"
+      >
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
