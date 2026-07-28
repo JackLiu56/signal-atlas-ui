@@ -13,6 +13,7 @@ import { RadioSpecRequest } from '../models/spec-request';
 export class RadioApiService {
   private readonly radioBaseUrl = 'http://localhost:8080/api/radios';
   private readonly brandBaseUrl = 'http://localhost:8080/api/brands';
+  private readonly specBaseUrl = 'http://localhost:8080/api/specs';
 
   constructor(private http: HttpClient) {}
 
@@ -25,7 +26,9 @@ export class RadioApiService {
       }
     });
 
-    return this.http.get<PagedResponse<RadioModelSummary>>(`${this.radioBaseUrl}/catalog`, { params });
+    return this.http.get<PagedResponse<RadioModelSummary>>(`${this.radioBaseUrl}/catalog`, {
+      params,
+    });
   }
 
   getRadioDetails(id: number): Observable<RadioModelDetail> {
@@ -36,19 +39,20 @@ export class RadioApiService {
     return this.http.get<Brand[]>(this.brandBaseUrl);
   }
 
-  createRadioModel(
-    request: RadioModelRequest
-  ): Observable<{ id: number }> {
+  createRadioModel(request: RadioModelRequest): Observable<{ id: number }> {
     return this.http.post<{ id: number }>(this.radioBaseUrl, request);
   }
 
-  addRadioSpec(
-    radioId: number,
-    request: RadioSpecRequest
-  ): Observable<RadioSpecResponse> {
-    return this.http.post<RadioSpecResponse>(
-      `${this.radioBaseUrl}/${radioId}/specs`,
-      request
+  addRadioSpec(radioId: number, request: RadioSpecRequest): Observable<RadioSpecResponse> {
+    return this.http.post<RadioSpecResponse>(`${this.radioBaseUrl}/${radioId}/specs`, request);
+  }
+
+  deleteRadioSpec(specId: number): Observable<string> {
+    return this.http.delete(
+      `http://localhost:8080/api/specs/${specId}`,
+      {
+        responseType: 'text',
+      },
     );
   }
 }

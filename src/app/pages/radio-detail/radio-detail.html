@@ -85,6 +85,7 @@
           <th>Category</th>
           <th>Specification</th>
           <th>Value</th>
+          <th>Actions</th>
         </tr>
         </thead>
 
@@ -94,9 +95,17 @@
           <td>{{ spec.specName }}</td>
           <td>
             {{ spec.specValue }}
-            <span *ngIf="spec.unit">
-                {{ spec.unit }}
-              </span>
+            <span *ngIf="spec.unit">{{ spec.unit }}</span>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="delete-spec-button"
+              [disabled]="deletingSpecId === spec.id"
+              (click)="deleteSpec(spec.id)"
+            >
+              {{ deletingSpecId === spec.id ? 'Deleting...' : 'Delete' }}
+            </button>
           </td>
         </tr>
         </tbody>

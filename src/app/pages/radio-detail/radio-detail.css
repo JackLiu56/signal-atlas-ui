@@ -183,6 +183,27 @@ th {
   color: #1f7a1f;
 }
 
+.delete-spec-button {
+  padding: 7px 12px;
+  border: 1px solid #d92d20;
+  border-radius: 6px;
+  background: white;
+  color: #d92d20;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-spec-button:hover {
+  background: #fdecea;
+}
+
+.delete-spec-button:disabled {
+  border-color: #ccc;
+  color: #999;
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
 @media (max-width: 760px) {
   .detail-header {
     flex-direction: column;

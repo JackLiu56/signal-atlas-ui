@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { RadioApiService } from '../../services/radio-api.service';
 import { FormsModule } from '@angular/forms';
 import { RadioSpecRequest } from '../../models/spec-request';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-radio-detail',
@@ -33,6 +34,8 @@ export class RadioDetail implements OnInit {
 
   loading = false;
   errorMessage = '';
+
+  deletingSpecId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -136,5 +139,50 @@ export class RadioDetail implements OnInit {
         this.changeDetectorRef.detectChanges();
       },
     });
+  }
+
+  deleteSpec(specId: number): void {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this technical specification?',
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.specErrorMessage = '';
+    this.specSuccessMessage = '';
+    this.deletingSpecId = specId;
+
+    this.radioApiService
+      .deleteRadioSpec(specId)
+      .pipe(
+        finalize(() => {
+          this.deletingSpecId = null;
+          this.changeDetectorRef.detectChanges();
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.specSuccessMessage = 'Technical specification deleted successfully.';
+
+          if (this.radio) {
+            this.radio.specs = this.radio.specs.filter((spec) => spec.id !== specId);
+          }
+
+          this.changeDetectorRef.detectChanges();
+        },
+        error: (error) => {
+          console.error('Delete spec API error:', error);
+
+          if (error.error && error.error.message) {
+            this.specErrorMessage = error.error.message;
+          } else {
+            this.specErrorMessage = 'Unable to delete technical specification.';
+          }
+
+          this.changeDetectorRef.detectChanges();
+        },
+      });
   }
 }
