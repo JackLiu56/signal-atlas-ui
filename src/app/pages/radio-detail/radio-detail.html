@@ -105,6 +105,82 @@
       <div *ngIf="radio.specs.length === 0" class="message">
         No technical specifications available.
       </div>
+
+      <div class="add-spec-card">
+        <h3>Add Technical Specification</h3>
+
+        <section *ngIf="specErrorMessage" class="error">
+          {{ specErrorMessage }}
+        </section>
+
+        <section *ngIf="specSuccessMessage" class="success">
+          {{ specSuccessMessage }}
+        </section>
+
+        <form (ngSubmit)="submitSpecForm()" class="spec-form">
+          <div class="spec-form-grid">
+            <label>
+              Specification Name
+              <input
+                type="text"
+                name="specName"
+                [(ngModel)]="specForm.specName"
+                placeholder="Output Power"
+                required
+              />
+            </label>
+
+            <label>
+              Value
+              <input
+                type="text"
+                name="specValue"
+                [(ngModel)]="specForm.specValue"
+                placeholder="1-5"
+                required
+              />
+            </label>
+
+            <label>
+              Unit
+              <input
+                type="text"
+                name="unit"
+                [(ngModel)]="specForm.unit"
+                placeholder="W"
+              />
+            </label>
+
+            <label>
+              Category
+              <input
+                type="text"
+                name="category"
+                [(ngModel)]="specForm.category"
+                placeholder="RF"
+              />
+            </label>
+
+            <label>
+              Display Order
+              <input
+                type="number"
+                name="displayOrder"
+                [(ngModel)]="specForm.displayOrder"
+                placeholder="1"
+              />
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="savingSpec"
+            class="add-spec-button"
+          >
+            {{ savingSpec ? 'Saving...' : 'Add Specification' }}
+          </button>
+        </form>
+      </div>
     </section>
   </section>
 </div>

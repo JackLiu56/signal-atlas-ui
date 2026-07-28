@@ -124,12 +124,75 @@ th {
   color: #b42318;
 }
 
+.add-spec-card {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.add-spec-card h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.spec-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.spec-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.spec-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: normal;
+}
+
+.add-spec-button {
+  margin-top: 18px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  cursor: pointer;
+}
+
+.add-spec-button:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.success {
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border: 1px solid #a6d8a8;
+  border-radius: 8px;
+  background: #edf8ed;
+  color: #1f7a1f;
+}
+
 @media (max-width: 760px) {
   .detail-header {
     flex-direction: column;
   }
 
   .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .spec-form-grid {
     grid-template-columns: 1fr;
   }
 }

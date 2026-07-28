@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CatalogQuery, PagedResponse, RadioModelSummary } from '../models/radio-catalog';
 import { Observable } from 'rxjs';
-import { RadioModelDetail } from '../models/radio-detail';
+import { RadioModelDetail, RadioSpecResponse } from '../models/radio-detail';
 import { Brand } from '../models/brand';
 import { RadioModelRequest } from '../models/radio-request';
+import { RadioSpecRequest } from '../models/spec-request';
 
 @Injectable({
   providedIn: 'root',
@@ -39,5 +40,15 @@ export class RadioApiService {
     request: RadioModelRequest
   ): Observable<{ id: number }> {
     return this.http.post<{ id: number }>(this.radioBaseUrl, request);
+  }
+
+  addRadioSpec(
+    radioId: number,
+    request: RadioSpecRequest
+  ): Observable<RadioSpecResponse> {
+    return this.http.post<RadioSpecResponse>(
+      `${this.radioBaseUrl}/${radioId}/specs`,
+      request
+    );
   }
 }
