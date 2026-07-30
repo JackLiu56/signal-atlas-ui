@@ -271,11 +271,11 @@ export class RadioDetail implements OnInit {
       specValue: '',
       unit: '',
       category: '',
-      displayOrder: null
+      displayOrder: null,
     };
 
     this.changeDetectorRef.detectChanges();
-  };
+  }
 
   submitEditSpec(specId: number): void {
     this.specErrorMessage = '';
@@ -325,6 +325,8 @@ export class RadioDetail implements OnInit {
           ),
         };
 
+        this.sortSpecsByDisplayOrder();
+
         this.editingSpecId = null;
         this.updatingSpec = false;
         this.changeDetectorRef.detectChanges();
@@ -342,5 +344,25 @@ export class RadioDetail implements OnInit {
         this.changeDetectorRef.detectChanges();
       },
     });
+  }
+
+  private sortSpecsByDisplayOrder(): void {
+    if (!this.radio) {
+      return;
+    }
+
+    this.radio = {
+      ...this.radio,
+      specs: [...this.radio.specs].sort((a, b) => {
+        const orderA = a.displayOrder ?? 0;
+        const orderB = b.displayOrder ?? 0;
+
+        if (orderA !== orderB) {
+          return orderA - orderB;
+        }
+
+        return a.id - b.id;
+      }),
+    };
   }
 }
