@@ -4,6 +4,7 @@ import { RadioDetail } from './pages/radio-detail/radio-detail';
 import { RadioCreate } from './pages/radio-create/radio-create';
 import { RadioEdit } from './pages/radio-edit/radio-edit';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { BrandManagement } from './pages/brand-management/brand-management';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,10 @@ export const routes: Routes = [
   {
     path: 'radios',
     component: RadioCatalog
+  },
+  {
+    path: 'brands',
+    component: BrandManagement
   },
   {
     path: 'radios/new',

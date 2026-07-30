@@ -1,0 +1,178 @@
+.brands-page {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.page-header p {
+  margin: 8px 0 0;
+  color: #666;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+}
+
+.form-card,
+.table-card {
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.form-card h2,
+.table-card h2 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 14px;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+button,
+.refresh-button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.secondary-button {
+  border: 1px solid #222;
+  background: white;
+  color: #222;
+}
+
+.refresh-button {
+  text-decoration: none;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-header span {
+  color: #666;
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 13px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #f7f7f7;
+}
+
+a {
+  color: #222;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.subtext {
+  margin-top: 5px;
+  color: #777;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.message {
+  padding: 16px;
+  color: #555;
+}
+
+.error,
+.success {
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.error {
+  border: 1px solid #f2b8b5;
+  background: #fdecea;
+  color: #b42318;
+}
+
+.success {
+  border: 1px solid #b7e4c7;
+  background: #edfdf3;
+  color: #067647;
+}
+
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

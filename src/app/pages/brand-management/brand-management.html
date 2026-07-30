@@ -1,0 +1,148 @@
+<div class="brands-page">
+  <header class="page-header">
+    <div>
+      <h1>Brands</h1>
+      <p>Manage manufacturer records used by the radio catalog.</p>
+    </div>
+
+    <button type="button" class="refresh-button" (click)="loadBrands()">
+      Refresh
+    </button>
+  </header>
+
+  <section *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </section>
+
+  <section *ngIf="successMessage" class="success">
+    {{ successMessage }}
+  </section>
+
+  <section class="content-grid">
+    <div class="form-card">
+      <h2>Add Brand</h2>
+
+      <form (ngSubmit)="submitBrandForm()">
+        <label>
+          Brand Name
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="brandForm.name"
+            placeholder="Yaesu"
+            required
+          />
+        </label>
+
+        <label>
+          Country
+          <input
+            type="text"
+            name="country"
+            [(ngModel)]="brandForm.country"
+            placeholder="Japan"
+          />
+        </label>
+
+        <label>
+          Founded Year
+          <input
+            type="number"
+            name="foundedYear"
+            [(ngModel)]="brandForm.foundedYear"
+            placeholder="1959"
+          />
+        </label>
+
+        <label>
+          Website URL
+          <input
+            type="text"
+            name="websiteUrl"
+            [(ngModel)]="brandForm.websiteUrl"
+            placeholder="https://www.example.com"
+          />
+        </label>
+
+        <label>
+          Logo URL
+          <input
+            type="text"
+            name="logoUrl"
+            [(ngModel)]="brandForm.logoUrl"
+            placeholder="Optional"
+          />
+        </label>
+
+        <label>
+          Description
+          <textarea
+            name="description"
+            [(ngModel)]="brandForm.description"
+            rows="5"
+            placeholder="Brief brand description"
+          ></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="saving">
+            {{ saving ? 'Saving...' : 'Create Brand' }}
+          </button>
+
+          <button type="button" class="secondary-button" (click)="resetForm()">
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="table-card">
+      <div class="section-header">
+        <h2>Brand Directory</h2>
+        <span>{{ brands.length }} brands</span>
+      </div>
+
+      <section *ngIf="loading" class="message">
+        Loading brands...
+      </section>
+
+      <table *ngIf="!loading && brands.length > 0">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Country</th>
+          <th>Founded</th>
+          <th>Website</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let brand of brands">
+          <td>
+            <strong>{{ brand.name }}</strong>
+            <div class="subtext">{{ brand.description }}</div>
+          </td>
+
+          <td>{{ brand.country }}</td>
+          <td>{{ brand.foundedYear }}</td>
+
+          <td>
+            <a
+              *ngIf="brand.websiteUrl"
+              [href]="brand.websiteUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Website
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <section *ngIf="!loading && brands.length === 0" class="message">
+        No brands available.
+      </section>
+    </div>
+  </section>
+</div>

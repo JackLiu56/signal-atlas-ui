@@ -6,6 +6,7 @@ import { RadioModelDetail, RadioSpecResponse } from '../models/radio-detail';
 import { Brand } from '../models/brand';
 import { RadioModelRequest } from '../models/radio-request';
 import { RadioSpecRequest } from '../models/spec-request';
+import { BrandRequest } from '../models/brand-request';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,10 @@ export class RadioApiService {
     return this.http.get<Brand[]>(this.brandBaseUrl);
   }
 
+  createBrand(request: BrandRequest): Observable<Brand> {
+    return this.http.post<Brand>(this.brandBaseUrl, request);
+  }
+
   createRadioModel(request: RadioModelRequest): Observable<{ id: number }> {
     return this.http.post<{ id: number }>(this.radioBaseUrl, request);
   }
@@ -47,33 +52,18 @@ export class RadioApiService {
     return this.http.post<RadioSpecResponse>(`${this.radioBaseUrl}/${radioId}/specs`, request);
   }
 
-  updateRadioSpec (
-    specId: number,
-    request: RadioSpecRequest
-  ): Observable<RadioSpecRequest>{
-    return this.http.put<RadioSpecResponse>(
-      `${this.specBaseUrl}/${specId}`,
-      request
-    );
+  updateRadioSpec(specId: number, request: RadioSpecRequest): Observable<RadioSpecRequest> {
+    return this.http.put<RadioSpecResponse>(`${this.specBaseUrl}/${specId}`, request);
   }
 
   deleteRadioSpec(specId: number): Observable<string> {
-    return this.http.delete(
-      `http://localhost:8080/api/specs/${specId}`,
-      {
-        responseType: 'text',
-      },
-    );
+    return this.http.delete(`http://localhost:8080/api/specs/${specId}`, {
+      responseType: 'text',
+    });
   }
 
-  updateRadioModel(
-    id: number,
-    request: RadioModelRequest
-  ): Observable<{ id: number }> {
-    return this.http.put<{ id: number }>(
-      `${this.radioBaseUrl}/${id}`,
-      request
-    );
+  updateRadioModel(id: number, request: RadioModelRequest): Observable<{ id: number }> {
+    return this.http.put<{ id: number }>(`${this.radioBaseUrl}/${id}`, request);
   }
 
   deleteRadioModel(id: number): Observable<string> {
