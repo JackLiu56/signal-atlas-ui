@@ -34,6 +34,7 @@ export interface PagedResponse<T> {
 
 export interface CatalogQuery {
   q?: string;
+  brandId?: number,
   category?: string;
   frequencyBand?: string;
   digitalProtocol?: string;

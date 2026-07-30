@@ -18,6 +18,24 @@
       (keyup.enter)="search()"
     />
 
+    <label>
+      Brand
+      <select
+        name="brandId"
+        [(ngModel)]="selectedBrandId"
+      >
+        <option [ngValue]="null">
+          All Brands
+        </option>
+
+        <option
+          *ngFor="let brand of brands"
+          [ngValue]="brand.id"
+          [textContent]="brand.name"
+        ></option>
+      </select>
+    </label>
+
     <select [(ngModel)]="category">
       <option value="">All Categories</option>
       <option value="HANDHELD">Handheld</option>
