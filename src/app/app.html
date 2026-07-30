@@ -1,1 +1,54 @@
-<router-outlet></router-outlet>
+<div class="app-shell">
+  <header class="app-header">
+    <a routerLink="/radios" class="brand-link">
+      <div class="brand-mark">SA</div>
+
+      <div>
+        <div class="brand-title">Signal Atlas</div>
+        <div class="brand-subtitle">Two-Way Radio Catalog Platform</div>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a
+        routerLink="/radios"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Catalog
+      </a>
+
+      <a
+        routerLink="/radios/new"
+        routerLinkActive="active-link"
+      >
+        Add Radio Model
+      </a>
+
+      <a
+        href="http://localhost:8080/swagger-ui.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Swagger API
+      </a>
+
+      <a
+        href="https://github.com/JackLiu56/signal-atlas-ui"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    <span>Signal Atlas</span>
+    <span>Java Spring Boot · Angular · REST APIs · JPA</span>
+  </footer>
+</div>
