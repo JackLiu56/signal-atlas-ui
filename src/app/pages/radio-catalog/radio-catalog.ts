@@ -9,16 +9,11 @@ import { Brand } from '../../models/brand';
 @Component({
   selector: 'app-radio-catalog',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterLink
-  ],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './radio-catalog.html',
-  styleUrl: './radio-catalog.css'
+  styleUrl: './radio-catalog.css',
 })
-export class RadioCatalog implements OnInit{
-
+export class RadioCatalog implements OnInit {
   radios: RadioModelSummary[] = [];
 
   pageNumber = 0;
@@ -31,6 +26,10 @@ export class RadioCatalog implements OnInit{
   q = '';
   category = '';
   frequencyBand = '';
+  digitalProtocol = '';
+  releaseYearFrom: number | null = null;
+  releaseYearTo: number | null = null;
+
   sortBy = 'modelName';
   direction = 'asc';
 
@@ -42,10 +41,10 @@ export class RadioCatalog implements OnInit{
 
   constructor(
     private radioApiService: RadioApiService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) { }
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
-  ngOnInit():void {
+  ngOnInit(): void {
     this.loadBrands();
     this.loadCatalog();
   }
@@ -58,8 +57,8 @@ export class RadioCatalog implements OnInit{
       },
       error: (error) => {
         console.error('Brand API error:', error);
-      }
-    })
+      },
+    });
   }
 
   loadCatalog() {
@@ -72,6 +71,9 @@ export class RadioCatalog implements OnInit{
         brandId: this.selectedBrandId ?? undefined,
         category: this.category,
         frequencyBand: this.frequencyBand,
+        digitalProtocol: this.digitalProtocol,
+        releaseYearFrom: this.releaseYearFrom ?? undefined,
+        releaseYearTo: this.releaseYearTo ?? undefined,
         page: this.pageNumber,
         size: this.pageSize,
         sortBy: this.sortBy,
@@ -99,7 +101,7 @@ export class RadioCatalog implements OnInit{
       });
   }
 
-  search(): void{
+  search(): void {
     this.pageNumber = 0;
     this.loadCatalog();
   }
@@ -109,21 +111,24 @@ export class RadioCatalog implements OnInit{
     this.selectedBrandId = null;
     this.category = '';
     this.frequencyBand = '';
+    this.digitalProtocol = '';
+    this.releaseYearFrom = null;
+    this.releaseYearTo = null;
     this.sortBy = 'modelName';
     this.direction = 'asc';
     this.pageNumber = 0;
     this.loadCatalog();
   }
 
-  previousPage(): void{
-    if (!this.first){
+  previousPage(): void {
+    if (!this.first) {
       this.pageNumber--;
       this.loadCatalog();
     }
   }
 
-  nextPage(): void{
-    if (!this.last){
+  nextPage(): void {
+    if (!this.last) {
       this.pageNumber++;
       this.loadCatalog();
     }

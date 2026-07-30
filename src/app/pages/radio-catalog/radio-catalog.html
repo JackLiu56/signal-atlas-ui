@@ -56,6 +56,36 @@
       <option value="UNKNOWN">Unknown</option>
     </select>
 
+    <label>
+      Digital Protocol
+      <input
+        type="text"
+        name="digitalProtocol"
+        [(ngModel)]="digitalProtocol"
+        placeholder="P25, NXDN, Analog"
+      />
+    </label>
+
+    <label>
+      Release Year From
+      <input
+        type="number"
+        name="releaseYearFrom"
+        [(ngModel)]="releaseYearFrom"
+        placeholder="2000"
+      />
+    </label>
+
+    <label>
+      Release Year To
+      <input
+        type="number"
+        name="releaseYearTo"
+        [(ngModel)]="releaseYearTo"
+        placeholder="2020"
+      />
+    </label>
+
     <select [(ngModel)]="sortBy">
       <option value="modelName">Sort by Model</option>
       <option value="brandName">Sort by Brand</option>
