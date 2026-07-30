@@ -107,22 +107,101 @@
 
         <tbody>
         <tr *ngFor="let spec of radio.specs">
-          <td>{{ spec.category }}</td>
-          <td>{{ spec.specName }}</td>
-          <td>
-            {{ spec.specValue }}
-            <span *ngIf="spec.unit">{{ spec.unit }}</span>
-          </td>
-          <td>
-            <button
-              type="button"
-              class="delete-spec-button"
-              [disabled]="deletingSpecId === spec.id"
-              (click)="deleteSpec(spec.id)"
-            >
-              {{ deletingSpecId === spec.id ? 'Deleting...' : 'Delete' }}
-            </button>
-          </td>
+          <ng-container *ngIf="editingSpecId !== spec.id">
+            <td>{{ spec.category }}</td>
+            <td>{{ spec.specName }}</td>
+            <td>
+              {{ spec.specValue }}
+              <span *ngIf="spec.unit">{{ spec.unit }}</span>
+            </td>
+            <td>
+              <div class="spec-action-buttons">
+                <button
+                  type="button"
+                  class="edit-spec-button"
+                  (click)="startEditSpec(spec)"
+                >
+                  Edit
+                </button>
+
+                <button
+                  type="button"
+                  class="delete-spec-button"
+                  [disabled]="deletingSpecId === spec.id"
+                  (click)="deleteSpec(spec.id)"
+                >
+                  {{ deletingSpecId === spec.id ? 'Deleting...' : 'Delete' }}
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container *ngIf="editingSpecId === spec.id">
+            <td>
+              <input
+                type="text"
+                class="table-input"
+                [(ngModel)]="editSpecForm.category"
+                placeholder="RF"
+              />
+            </td>
+
+            <td>
+              <input
+                type="text"
+                class="table-input"
+                [(ngModel)]="editSpecForm.specName"
+                placeholder="Output Power"
+              />
+            </td>
+
+            <td>
+              <div class="edit-value-group">
+                <input
+                  type="text"
+                  class="table-input"
+                  [(ngModel)]="editSpecForm.specValue"
+                  placeholder="1-5"
+                />
+
+                <input
+                  type="text"
+                  class="table-input small-input"
+                  [(ngModel)]="editSpecForm.unit"
+                  placeholder="W"
+                />
+
+                <input
+                  type="number"
+                  class="table-input small-input"
+                  [(ngModel)]="editSpecForm.displayOrder"
+                  placeholder="Order"
+                />
+              </div>
+            </td>
+
+            <td>
+              <div class="spec-action-buttons">
+                <button
+                  type="button"
+                  class="save-spec-button"
+                  [disabled]="updatingSpec"
+                  (click)="submitEditSpec(spec.id)"
+                >
+                  {{ updatingSpec ? 'Saving...' : 'Save' }}
+                </button>
+
+                <button
+                  type="button"
+                  class="cancel-spec-button"
+                  [disabled]="updatingSpec"
+                  (click)="cancelEditSpec()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </td>
+          </ng-container>
         </tr>
         </tbody>
       </table>

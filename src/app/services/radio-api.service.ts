@@ -47,6 +47,16 @@ export class RadioApiService {
     return this.http.post<RadioSpecResponse>(`${this.radioBaseUrl}/${radioId}/specs`, request);
   }
 
+  updateRadioSpec (
+    specId: number,
+    request: RadioSpecRequest
+  ): Observable<RadioSpecRequest>{
+    return this.http.put<RadioSpecResponse>(
+      `${this.specBaseUrl}/${specId}`,
+      request
+    );
+  }
+
   deleteRadioSpec(specId: number): Observable<string> {
     return this.http.delete(
       `http://localhost:8080/api/specs/${specId}`,

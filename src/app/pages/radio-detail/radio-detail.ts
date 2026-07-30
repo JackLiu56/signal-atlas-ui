@@ -38,6 +38,17 @@ export class RadioDetail implements OnInit {
   deletingSpecId: number | null = null;
   deletingRadio = false;
 
+  editingSpecId: number | null = null;
+  updatingSpec = false;
+
+  editSpecForm: RadioSpecRequest = {
+    specName: '',
+    specValue: '',
+    unit: '',
+    category: '',
+    displayOrder: null,
+  };
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -168,9 +179,14 @@ export class RadioDetail implements OnInit {
         next: () => {
           this.specSuccessMessage = 'Technical specification deleted successfully.';
 
-          if (this.radio) {
-            this.radio.specs = this.radio.specs.filter((spec) => spec.id !== specId);
+          if (!this.radio) {
+            return;
           }
+
+          this.radio = {
+            ...this.radio,
+            specs: this.radio.specs.filter((spec) => spec.id !== specId),
+          };
 
           this.changeDetectorRef.detectChanges();
         },
@@ -224,6 +240,105 @@ export class RadioDetail implements OnInit {
         }
 
         this.deletingRadio = false;
+        this.changeDetectorRef.detectChanges();
+      },
+    });
+  }
+
+  startEditSpec(spec: any): void {
+    this.specErrorMessage = '';
+    this.specSuccessMessage = '';
+
+    this.editingSpecId = spec.id;
+
+    this.editSpecForm = {
+      specName: spec.specName ?? '',
+      specValue: spec.specValue ?? '',
+      unit: spec.unit ?? '',
+      category: spec.category ?? '',
+      displayOrder: spec.displayOrder ?? null,
+    };
+
+    this.changeDetectorRef.detectChanges();
+  }
+
+  cancelEditSpec(): void {
+    this.editingSpecId = null;
+    this.updatingSpec = false;
+
+    this.editSpecForm = {
+      specName: '',
+      specValue: '',
+      unit: '',
+      category: '',
+      displayOrder: null
+    };
+
+    this.changeDetectorRef.detectChanges();
+  };
+
+  submitEditSpec(specId: number): void {
+    this.specErrorMessage = '';
+    this.specSuccessMessage = '';
+
+    if (!this.editSpecForm.specName.trim()) {
+      this.specErrorMessage = 'Specification name is required.';
+      return;
+    }
+
+    if (!this.editSpecForm.specValue.trim()) {
+      this.specErrorMessage = 'Specification value is required.';
+      return;
+    }
+
+    const request: RadioSpecRequest = {
+      specName: this.editSpecForm.specName.trim(),
+      specValue: this.editSpecForm.specValue.trim(),
+      unit: this.editSpecForm.unit.trim(),
+      category: this.editSpecForm.category.trim(),
+      displayOrder: this.editSpecForm.displayOrder,
+    };
+
+    this.updatingSpec = true;
+
+    this.radioApiService.updateRadioSpec(specId, request).subscribe({
+      next: (updatedSpec) => {
+        this.specSuccessMessage = 'Technical specification updated successfully.';
+
+        if (!this.radio) {
+          return;
+        }
+
+        this.radio = {
+          ...this.radio,
+          specs: this.radio.specs.map((spec) =>
+            spec.id === specId
+              ? {
+                  ...spec,
+                  specName: request.specName,
+                  specValue: request.specValue,
+                  unit: request.unit,
+                  category: request.category,
+                  displayOrder: request.displayOrder ?? 0,
+                }
+              : spec,
+          ),
+        };
+
+        this.editingSpecId = null;
+        this.updatingSpec = false;
+        this.changeDetectorRef.detectChanges();
+      },
+      error: (error) => {
+        console.error('Update spec API error:', error);
+
+        if (error.error && error.error.message) {
+          this.specErrorMessage = error.error.message;
+        } else {
+          this.specErrorMessage = 'Unable to update technical specification.';
+        }
+
+        this.updatingSpec = false;
         this.changeDetectorRef.detectChanges();
       },
     });
