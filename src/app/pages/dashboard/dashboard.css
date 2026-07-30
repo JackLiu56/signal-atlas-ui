@@ -1,0 +1,169 @@
+.dashboard-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding: 28px;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  background: white;
+}
+
+.hero-section h1 {
+  margin: 0;
+  font-size: 34px;
+}
+
+.hero-section p {
+  margin: 10px 0 0;
+  color: #666;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primary-link,
+.secondary-link {
+  padding: 11px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.primary-link {
+  background: #222;
+  color: white;
+}
+
+.secondary-link {
+  border: 1px solid #222;
+  color: #222;
+  background: white;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.stat-card span {
+  display: block;
+  color: #666;
+  font-size: 13px;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.content-card {
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: white;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.section-header p {
+  margin: 6px 0 0;
+  color: #666;
+}
+
+.text-link,
+.model-link {
+  color: #222;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.text-link:hover,
+.model-link:hover {
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 13px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+th {
+  background: #f7f7f7;
+}
+
+.subtext {
+  margin-top: 4px;
+  color: #777;
+  font-size: 13px;
+}
+
+.message {
+  padding: 16px;
+  color: #555;
+}
+
+.error {
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border: 1px solid #f2b8b5;
+  border-radius: 8px;
+  background: #fdecea;
+  color: #b42318;
+}
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-section,
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

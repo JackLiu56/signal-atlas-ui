@@ -3,12 +3,12 @@ import { RadioCatalog } from './pages/radio-catalog/radio-catalog';
 import { RadioDetail } from './pages/radio-detail/radio-detail';
 import { RadioCreate } from './pages/radio-create/radio-create';
 import { RadioEdit } from './pages/radio-edit/radio-edit';
+import { Dashboard } from './pages/dashboard/dashboard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'radios',
-    pathMatch: 'full',
+    component: Dashboard
   },
   {
     path: 'radios',

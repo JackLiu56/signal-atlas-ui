@@ -1,0 +1,104 @@
+<div class="dashboard-page">
+  <section class="hero-section">
+    <div>
+      <h1>Signal Atlas Dashboard</h1>
+      <p>
+        A full-stack catalog platform for vintage two-way radios and communication hardware.
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <a routerLink="/radios" class="primary-link">
+        View Catalog
+      </a>
+
+      <a routerLink="/radios/new" class="secondary-link">
+        Add Radio Model
+      </a>
+    </div>
+  </section>
+
+  <section *ngIf="loading" class="message">
+    Loading dashboard...
+  </section>
+
+  <section *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </section>
+
+  <section *ngIf="!loading && !errorMessage" class="stats-grid">
+    <div class="stat-card">
+      <span>Total Radio Models</span>
+      <strong>{{ totalRadios }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Total Brands</span>
+      <strong>{{ totalBrands }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>P25 Models</span>
+      <strong>{{ p25Count }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Analog Models</span>
+      <strong>{{ analogCount }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>NXDN Models</span>
+      <strong>{{ nxdnCount }}</strong>
+    </div>
+  </section>
+
+  <section *ngIf="!loading && !errorMessage" class="content-card">
+    <div class="section-header">
+      <div>
+        <h2>Featured Radio Models</h2>
+        <p>Recently loaded catalog records from the backend API.</p>
+      </div>
+
+      <a routerLink="/radios" class="text-link">
+        Open full catalog →
+      </a>
+    </div>
+
+    <table *ngIf="featuredRadios.length > 0">
+      <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Band</th>
+        <th>Protocol</th>
+        <th>Market Range</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let radio of featuredRadios">
+        <td>{{ radio.brandName }}</td>
+
+        <td>
+          <a [routerLink]="['/radios', radio.id]" class="model-link">
+            {{ radio.modelName }}
+          </a>
+          <div class="subtext">{{ radio.modelNumber }}</div>
+        </td>
+
+        <td>{{ radio.frequencyBand }}</td>
+        <td>{{ radio.digitalProtocol }}</td>
+
+        <td>
+          ${{ radio.estimatedMarketLow }} - ${{ radio.estimatedMarketHigh }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="featuredRadios.length === 0" class="message">
+      No radio models available.
+    </div>
+  </section>
+</div>

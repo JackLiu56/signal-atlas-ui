@@ -1,6 +1,6 @@
 <div class="app-shell">
   <header class="app-header">
-    <a routerLink="/radios" class="brand-link">
+    <a routerLink="/" class="brand-link">
       <div class="brand-mark">SA</div>
 
       <div>
@@ -10,6 +10,14 @@
     </a>
 
     <nav class="nav-links">
+      <a
+        routerLink="/"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Dashboard
+      </a>
+
       <a
         routerLink="/radios"
         routerLinkActive="active-link"
