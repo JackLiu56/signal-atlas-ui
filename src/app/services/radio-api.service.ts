@@ -44,6 +44,10 @@ export class RadioApiService {
     return this.http.post<Brand>(this.brandBaseUrl, request);
   }
 
+  updateBrand(id: number, request: BrandRequest): Observable<Brand> {
+    return this.http.put<Brand>(`${this.brandBaseUrl}/${id}`, request);
+  }
+
   createRadioModel(request: RadioModelRequest): Observable<{ id: number }> {
     return this.http.post<{ id: number }>(this.radioBaseUrl, request);
   }

@@ -166,6 +166,52 @@ a:hover {
   color: #067647;
 }
 
+.small-button {
+  padding: 8px 11px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cancel-button {
+  padding: 8px 11px;
+  border: 1px solid #222;
+  border-radius: 6px;
+  background: white;
+  color: #222;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.table-input,
+.table-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 6px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.table-textarea {
+  resize: vertical;
+}
+
+td .table-input:first-child,
+td .table-textarea:first-child {
+  margin-top: 0;
+}
+
 @media (max-width: 900px) {
   .content-grid {
     grid-template-columns: 1fr;

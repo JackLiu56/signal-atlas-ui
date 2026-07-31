@@ -113,29 +113,116 @@
           <th>Country</th>
           <th>Founded</th>
           <th>Website</th>
+          <th>Actions</th>
         </tr>
         </thead>
 
         <tbody>
         <tr *ngFor="let brand of brands">
-          <td>
-            <strong>{{ brand.name }}</strong>
-            <div class="subtext">{{ brand.description }}</div>
-          </td>
+          <ng-container *ngIf="editingBrandId !== brand.id">
+            <td>
+              <strong>{{ brand.name }}</strong>
+              <div class="subtext">{{ brand.description }}</div>
+            </td>
 
-          <td>{{ brand.country }}</td>
-          <td>{{ brand.foundedYear }}</td>
+            <td>{{ brand.country }}</td>
+            <td>{{ brand.foundedYear }}</td>
 
-          <td>
-            <a
-              *ngIf="brand.websiteUrl"
-              [href]="brand.websiteUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Website
-            </a>
-          </td>
+            <td>
+              <a
+                *ngIf="brand.websiteUrl"
+                [href]="brand.websiteUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Website
+              </a>
+            </td>
+
+            <td>
+              <button
+                type="button"
+                class="small-button"
+                (click)="startEditBrand(brand)"
+              >
+                Edit
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container *ngIf="editingBrandId === brand.id">
+            <td>
+              <input
+                type="text"
+                class="table-input"
+                [(ngModel)]="editBrandForm.name"
+                placeholder="Brand name"
+              />
+
+              <textarea
+                class="table-textarea"
+                [(ngModel)]="editBrandForm.description"
+                rows="3"
+                placeholder="Description"
+              ></textarea>
+            </td>
+
+            <td>
+              <input
+                type="text"
+                class="table-input"
+                [(ngModel)]="editBrandForm.country"
+                placeholder="Country"
+              />
+            </td>
+
+            <td>
+              <input
+                type="number"
+                class="table-input"
+                [(ngModel)]="editBrandForm.foundedYear"
+                placeholder="Founded year"
+              />
+            </td>
+
+            <td>
+              <input
+                type="text"
+                class="table-input"
+                [(ngModel)]="editBrandForm.websiteUrl"
+                placeholder="Website URL"
+              />
+
+              <input
+                type="text"
+                class="table-input"
+                [(ngModel)]="editBrandForm.logoUrl"
+                placeholder="Logo URL"
+              />
+            </td>
+
+            <td>
+              <div class="action-buttons">
+                <button
+                  type="button"
+                  class="small-button"
+                  [disabled]="updating"
+                  (click)="submitEditBrand(brand.id)"
+                >
+                  {{ updating ? 'Saving...' : 'Save' }}
+                </button>
+
+                <button
+                  type="button"
+                  class="cancel-button"
+                  [disabled]="updating"
+                  (click)="cancelEditBrand()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </td>
+          </ng-container>
         </tr>
         </tbody>
       </table>
